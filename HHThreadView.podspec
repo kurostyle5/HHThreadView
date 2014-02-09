@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "HHThreadView"
-  s.version          = "0.9.0"
+  s.version          = "0.9.1"
   s.summary          = "An iOS library for displaying a thread of comments, with nested replies. Inspired by Alien Blue."
   s.homepage         = "http://github.com/harlanhaskins/HHThreadView"
   s.license          = 'MIT'
@@ -8,8 +8,8 @@ Pod::Spec.new do |s|
   s.source           = { :git => "https://github.com/harlanhaskins/HHThreadView.git", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/harlanhaskins'
 
-  s.platform     = :ios, '6.0'
-  s.ios.deployment_target = '6.0'
+  s.platform     = :ios, '5.0'
+  s.ios.deployment_target = '5.0'
   s.requires_arc = true
 
   s.source_files = 'Classes/ios/*.{h,m}'
