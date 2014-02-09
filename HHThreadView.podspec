@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "HHThreadView"
-  s.version          = "0.9.1"
+  s.version          = "0.9.2"
   s.summary          = "An iOS library for displaying a thread of comments, with nested replies. Inspired by Alien Blue."
   s.homepage         = "http://github.com/harlanhaskins/HHThreadView"
   s.license          = 'MIT'
@@ -12,7 +12,8 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '5.0'
   s.requires_arc = true
 
-  s.source_files = 'Classes/ios/*.{h,m}'
+  s.public_header_files = 'Classes/ios/*.h'
+  s.source_files = 'Classes/ios/HHThreadScrollView.h'
 
   s.ios.exclude_files = 'Classes/osx'
   s.osx.exclude_files = 'Classes/ios'
