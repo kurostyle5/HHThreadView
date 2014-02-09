@@ -3,11 +3,21 @@
 [![Version](http://cocoapod-badges.herokuapp.com/v/HHThreadView/badge.png)](http://cocoadocs.org/docsets/HHThreadView)
 [![Platform](http://cocoapod-badges.herokuapp.com/p/HHThreadView/badge.png)](http://cocoadocs.org/docsets/HHThreadView)
 
-## Usage
+An iOS library for displaying a thread of comments, with nested replies. Inspired by Alien Blue.
 
-To run the example project; clone the repo, and run `pod install` from the Project directory first.
+# Features
+* Nested threads
+* Indentation
+* Dynamically sizeable cells
+* Attributed text
+* Expandable cells
 
-## Requirements
+# Planned Features
+
+* Collapsibility
+* 'Action Buttons' for actions in response to cells.
+* Speed improvements
+
 
 ## Installation
 
@@ -18,7 +28,7 @@ it simply add the following line to your Podfile:
 
 ## Author
 
-Harlan Haskins, harlan@bryx.com
+Harlan Haskins, harlan@harlanhaskins.com
 
 ## License
 
