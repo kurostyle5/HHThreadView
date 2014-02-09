@@ -135,14 +135,15 @@ static const NSInteger MAX_INDENTATION_LEVEL = 6;
 }
 
 - (NSString*) headerText {
+    NSString *text = self.post.headerText;
     NSInteger numberPastMax = _indentationLevel - MAX_INDENTATION_LEVEL;
     if (numberPastMax > 0) {
         NSString *paddingString = @"• ";
         NSString *dots = [@"" stringByPaddingToLength:(numberPastMax * paddingString.length) withString:paddingString startingAtIndex:0];
-        return [dots stringByAppendingString:self.post.headerText];
+        text = [dots stringByAppendingString:text];
     }
     NSString *arrowString = self.collapsed ? @"▸ " : @"▾ ";
-    return [arrowString stringByAppendingString:self.post.headerText];
+    return [arrowString stringByAppendingString:text];
 }
 
 - (void) tappedOnCell {
