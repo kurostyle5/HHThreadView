@@ -37,6 +37,17 @@
     self.allCells = [NSMutableArray array];
     for (int i = 0; i < self.posts.count; i++) {
         HHCollapsiblePostCell *cell = [HHCollapsiblePostCell cellWithPost:self.posts[i]];
+        cell.collapsedCellBlock = ^(HHCollapsiblePostCell* cell) {
+            NSUInteger i = [self.allCells indexOfObject:cell];
+            while(i < (self.allCells.count - 1)) {
+                HHCollapsiblePostCell *cellToCollapse = self.allCells[i];
+                if (cellToCollapse.indentationLevel <= cell.indentationLevel) {
+                    break;
+                }
+                [cellToCollapse collapse];
+                i++;
+            }
+        };
         [self.allCells addObject:cell];
         [self addSubview:cell];
     }

@@ -15,6 +15,10 @@
 @property (nonatomic, readwrite) HHCollapsiblePostCellActionsView *actionsView;
 @property (nonatomic) BOOL actionButtonsVisible;
 
+@property (nonatomic, readwrite, getter = isCollapsed) BOOL collapsed;
+
+@property (nonatomic) CGRect preCollapseFrame;
+
 @property (nonatomic) UITextView *bodyView;
 @property (nonatomic) UIButton *headerButton;
 
@@ -94,7 +98,50 @@ static const NSInteger MAX_INDENTATION_LEVEL = 6;
     self.headerButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     self.headerButton.contentEdgeInsets = UIEdgeInsetsMake(0, 5.0, 0, 0);
     self.headerButton.frame = CGRectMake(0, 0, self.frame.size.width, 15.0);
+//    [self.headerButton addTarget:self action:@selector(headerButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.headerButton];
+}
+
+- (void) headerButtonTapped {
+    if (self.collapsed) {
+        [self unCollapse];
+    }
+    else {
+        [self collapseFromSelf:YES];
+    }
+}
+
+- (void) collapseFromSelf:(BOOL)fromSelf {
+    CGFloat newHeight = 0.0;
+    
+    CGRect newFrame =
+    self.preCollapseFrame = self.frame;
+    
+    if (fromSelf) {
+        self.collapsedCellBlock(self);
+        newHeight = self.headerButton.frame.size.height;
+    }
+    
+    newFrame.size.height = newHeight;
+    
+    self.frame = newFrame;
+    
+    self.collapsed = YES;
+}
+
+- (void) collapse {
+    if (self.collapsed) {
+        return;
+    }
+    [self collapseFromSelf:NO];
+}
+
+- (void) unCollapse {
+    if (!self.collapsed) {
+        return;
+    }
+    self.frame = self.preCollapseFrame;
+    self.collapsed = NO;
 }
 
 - (NSInteger) indentationLevel {
