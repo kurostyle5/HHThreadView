@@ -21,6 +21,9 @@ An iOS library for displaying a thread of comments, with nested replies. Inspire
 
 ## Installation
 
+Please don't use this. It's under heavy development and it's super broken and
+subject to change at a whim.
+
 HHThreadView is available through [CocoaPods](http://cocoapods.org), to install
 it simply add the following line to your Podfile:
 
