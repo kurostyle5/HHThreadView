@@ -1,5 +1,5 @@
 //
-//  HHCommentThreadView.m
+//  HHThreadScrollView.m
 //  CSH News
 //
 //  Created by Harlan Haskins on 2/5/14.
@@ -7,12 +7,12 @@
 //
 
 #import "HHThreadScrollView.h"
-#import "HHCollapsiblePostCell.h"
+#import "HHPostCell.h"
 #import "HHPostProtocol.h"
 
 @interface HHThreadScrollView ()
 
-@property (nonatomic) HHCollapsiblePostCell *parentCell;
+@property (nonatomic) HHPostCell *parentCell;
 @property (nonatomic) NSArray *posts;
 @property (nonatomic) BOOL laidOutSubviews;
 
@@ -42,7 +42,7 @@
 - (void) addAllCellsAsSubviews {
     self.allCells = [NSMutableArray array];
     for (int i = 0; i < self.posts.count; i++) {
-        HHCollapsiblePostCell *cell = [HHCollapsiblePostCell cellWithPost:self.posts[i]];
+        HHPostCell *cell = [HHPostCell cellWithPost:self.posts[i]];
         [self.allCells addObject:cell];
         [self addSubview:cell];
     }
@@ -61,7 +61,7 @@
         CGFloat previousHeight = 0;
         CGFloat previousY = 0;
         for (int i = 0; i < self.allCells.count; i++) {
-            HHCollapsiblePostCell *cell = self.allCells[i];
+            HHPostCell *cell = self.allCells[i];
             
             CGFloat originY =
             previousY = previousY + previousHeight;

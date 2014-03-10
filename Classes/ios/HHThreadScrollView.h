@@ -1,5 +1,5 @@
 //
-//  HHCommentThreadView.h
+//  HHThreadScrollView.h
 //  CSH News
 //
 //  Created by Harlan Haskins on 2/5/14.

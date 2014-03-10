@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIColor (HHCollapsiblePostCellColors)
+@interface UIColor (HHPostCellColors)
 
 + (UIColor*) HH_postButtonColor;
 

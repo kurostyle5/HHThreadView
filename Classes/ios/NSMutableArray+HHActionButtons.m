@@ -7,7 +7,7 @@
 //
 
 #import "NSMutableArray+HHActionButtons.h"
-#import "UIColor+HHCollapsiblePostCellColors.h"
+#import "UIColor+HHPostCellColors.h"
 
 @implementation NSMutableArray (HHActionButtons)
 

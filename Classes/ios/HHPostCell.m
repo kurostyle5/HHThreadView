@@ -1,18 +1,18 @@
 //
-//  CollapsibleCommentCell.m
+//  HHPostCell.m
 //  CSH News
 //
 //  Created by Harlan Haskins on 2/4/14.
 //  Copyright (c) 2014 Haskins. All rights reserved.
 //
 
-#import "HHCollapsiblePostCell.h"
-#import "HHCollapsiblePostCellActionsView.h"
+#import "HHPostCell.h"
+#import "HHPostCellActionsView.h"
 #import "HHPostProtocol.h"
 
-@interface HHCollapsiblePostCell ()
+@interface HHPostCell ()
 
-@property (nonatomic, readwrite) HHCollapsiblePostCellActionsView *actionsView;
+@property (nonatomic, readwrite) HHPostCellActionsView *actionsView;
 @property (nonatomic) BOOL actionButtonsVisible;
 
 @property (nonatomic) UITextView *bodyView;
@@ -28,13 +28,13 @@
 
 @end
 
-@implementation HHCollapsiblePostCell
+@implementation HHPostCell
 
 static const NSInteger MAX_INDENTATION_LEVEL = 6;
 static const CGFloat ACTION_VIEW_HEIGHT = 44.0;
 
 + (instancetype) cellWithPost:(id<HHPostProtocol>)post {
-    HHCollapsiblePostCell *cell = [HHCollapsiblePostCell new];
+    HHPostCell *cell = [HHPostCell new];
     
     [cell setPost:post];
     [cell adjustDepth];
@@ -168,7 +168,7 @@ static const CGFloat ACTION_VIEW_HEIGHT = 44.0;
 - (void) setActionButtons:(NSMutableArray *)actionButtons {
     CGRect actionFrame = CGRectZero;
     actionFrame.size = CGSizeMake([self width], ACTION_VIEW_HEIGHT);
-    self.actionsView = [HHCollapsiblePostCellActionsView viewWithActionButtons:actionButtons
+    self.actionsView = [HHPostCellActionsView viewWithActionButtons:actionButtons
                                                                          frame:actionFrame];
     [self addSubview:self.actionsView];
 }

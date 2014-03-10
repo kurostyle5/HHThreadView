@@ -1,5 +1,5 @@
 //
-//  CollapsibleCommentCell.h
+//  HHPostCell.h
 //  CSH News
 //
 //  Created by Harlan Haskins on 2/4/14.
@@ -8,18 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@class HHCollapsiblePostCellActionsView;
+@class HHPostCellActionsView;
 
 @protocol HHPostProtocol;
 
 /**
- The HHCollapsibleCommentCell class represents a cell in a large table that contains a
+ The HHPostCell class represents a cell in a large table that contains a
  forum-style post and its children. Upon tapping the header, the view collapses itself 
  and all of its children.
  
  @since 1.0
  */
-@interface HHCollapsiblePostCell : UIView
+@interface HHPostCell : UIView
 
 + (instancetype) cellWithPost:(id<HHPostProtocol>)post;
 
@@ -45,7 +45,7 @@
  
  @since 1.0
  */
-@property (nonatomic, readonly) HHCollapsiblePostCellActionsView *actionsView;
+@property (nonatomic, readonly) HHPostCellActionsView *actionsView;
 
 /**
  The action buttons in the cell.

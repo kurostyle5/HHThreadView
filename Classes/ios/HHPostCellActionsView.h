@@ -1,5 +1,5 @@
 //
-//  CellActionsView.h
+//  HHPostCellActionsView.h
 //  CSH News
 //
 //  Created by Harlan Haskins on 2/4/14.
@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 /**
- HHCollapsiblePostCellActionsView is a UIView that positions a set of UIButtons inside an HHCollapsiblePostCell, accessible with a swipe.
+ HHCPostCellActionsView is a UIView that positions a set of UIButtons inside an HHPostCell, accessible with a swipe.
  */
-@interface HHCollapsiblePostCellActionsView : UIView
+@interface HHPostCellActionsView : UIView
 
 + (instancetype) viewWithActionButtons:(NSArray*)actionButtons frame:(CGRect)frame;
 

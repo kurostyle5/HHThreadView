@@ -6,9 +6,9 @@
 //
 //
 
-#import "UIColor+HHCollapsiblePostCellColors.h"
+#import "UIColor+HHPostCellColors.h"
 
-@implementation UIColor (HHCollapsiblePostCellColors)
+@implementation UIColor (HHPostCellColors)
 
 + (UIColor*) HH_postButtonColor {
     return [UIColor colorWithRed:0.000 green:0.484 blue:1.000 alpha:1.000];
