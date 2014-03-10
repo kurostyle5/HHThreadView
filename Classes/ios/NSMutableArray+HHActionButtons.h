@@ -10,4 +10,8 @@
 
 @interface NSMutableArray (HHActionButtons)
 
+- (void) HH_addActionButtonWithImage:(UIImage*)image
+                              target:(id)target
+                            selector:(SEL)selector;
+
 @end

@@ -15,10 +15,6 @@
 @property (nonatomic, readwrite) HHCollapsiblePostCellActionsView *actionsView;
 @property (nonatomic) BOOL actionButtonsVisible;
 
-@property (nonatomic, readwrite, getter = isCollapsed) BOOL collapsed;
-
-@property (nonatomic) CGRect preCollapseFrame;
-
 @property (nonatomic) UITextView *bodyView;
 @property (nonatomic) UIButton *headerButton;
 
@@ -35,6 +31,7 @@
 @implementation HHCollapsiblePostCell
 
 static const NSInteger MAX_INDENTATION_LEVEL = 6;
+static const CGFloat ACTION_VIEW_HEIGHT = 44.0;
 
 + (instancetype) cellWithPost:(id<HHPostProtocol>)post {
     HHCollapsiblePostCell *cell = [HHCollapsiblePostCell new];
@@ -98,56 +95,19 @@ static const NSInteger MAX_INDENTATION_LEVEL = 6;
     self.headerButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     self.headerButton.contentEdgeInsets = UIEdgeInsetsMake(0, 5.0, 0, 0);
     self.headerButton.frame = CGRectMake(0, 0, self.frame.size.width, 15.0);
-//    [self.headerButton addTarget:self action:@selector(headerButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.headerButton];
 }
 
-- (void) headerButtonTapped {
-    if (self.collapsed) {
-        [self unCollapse];
-    }
-    else {
-        [self collapseFromSelf:YES];
-    }
-}
-
-- (void) collapseFromSelf:(BOOL)fromSelf {
-    CGFloat newHeight = 0.0;
-    
-    CGRect newFrame =
-    self.preCollapseFrame = self.frame;
-    
-    if (fromSelf) {
-        self.collapsedCellBlock(self);
-        newHeight = self.headerButton.frame.size.height;
-    }
-    
-    newFrame.size.height = newHeight;
-    
-    self.frame = newFrame;
-    
-    self.collapsed = YES;
-}
-
-- (void) collapse {
-    if (self.collapsed) {
-        return;
-    }
-    [self collapseFromSelf:NO];
-}
-
-- (void) unCollapse {
-    if (!self.collapsed) {
-        return;
-    }
-    self.frame = self.preCollapseFrame;
-    self.collapsed = NO;
-}
-
 - (NSInteger) indentationLevel {
-    CGFloat indentationLevel = MIN(_indentationLevel, MAX_INDENTATION_LEVEL);
-    indentationLevel = self.actionButtonsVisible ? 0 : indentationLevel;
-    return indentationLevel;
+    return MIN(_indentationLevel, MAX_INDENTATION_LEVEL);
+}
+
+- (CGFloat) width {
+    return self.frame.size.width - (self.indentationLevel * self.indentationWidth);
+}
+
+- (CGFloat) x {
+    return self.frame.size.width - [self width];
 }
 
 - (void) layoutSubviews {
@@ -159,17 +119,21 @@ static const NSInteger MAX_INDENTATION_LEVEL = 6;
         frame.origin.x = (self.indentationLevel * self.indentationWidth);
         frame.size.width -= frame.origin.x;
         
+        CGRect bodyViewFrame = frame;
+        bodyViewFrame.size.height = self.textViewHeight;
+        
         CGRect headerFrame = frame;
         headerFrame.size.height = buttonHeight;
         headerFrame.origin.y = 0;
         
         CGRect actionFrame = self.actionsView.frame;
+        actionFrame.origin.x = [self x];
         actionFrame.origin.y = self.bodyView.frame.origin.y + self.bodyView.frame.size.height;
-        actionFrame.size.height = 55.0;
+        actionFrame.size.height = ACTION_VIEW_HEIGHT;
         
         dispatch_async(dispatch_get_main_queue(), ^{
             self.headerButton.frame = headerFrame;
-            self.bodyView.frame = frame;
+            self.bodyView.frame = bodyViewFrame;
             self.actionsView.frame = actionFrame;
             
             CGRect lineViewFrame = CGRectMake(0, 0, 1 / [UIScreen mainScreen].scale, frame.size.height);
@@ -182,15 +146,14 @@ static const NSInteger MAX_INDENTATION_LEVEL = 6;
 }
 
 - (NSString*) headerText {
-    NSString *text = self.post.headerText;
     NSInteger numberPastMax = _indentationLevel - MAX_INDENTATION_LEVEL;
     if (numberPastMax > 0) {
         NSString *paddingString = @"• ";
         NSString *dots = [@"" stringByPaddingToLength:(numberPastMax * paddingString.length) withString:paddingString startingAtIndex:0];
-        text = [dots stringByAppendingString:text];
+        return [dots stringByAppendingString:self.post.headerText];
     }
     NSString *arrowString = self.collapsed ? @"▸ " : @"▾ ";
-    return [arrowString stringByAppendingString:text];
+    return [arrowString stringByAppendingString:self.post.headerText];
 }
 
 - (void) tappedOnCell {
@@ -198,8 +161,15 @@ static const NSInteger MAX_INDENTATION_LEVEL = 6;
     [self setNeedsLayout];
 }
 
+- (BOOL) actionButtonsVisible {
+    return YES;
+}
+
 - (void) setActionButtons:(NSMutableArray *)actionButtons {
-    self.actionsView = [HHCollapsiblePostCellActionsView viewWithActionButtons:actionButtons size:CGSizeMake(self.frame.size.width, 0.0)];
+    CGRect actionFrame = CGRectZero;
+    actionFrame.size = CGSizeMake([self width], ACTION_VIEW_HEIGHT);
+    self.actionsView = [HHCollapsiblePostCellActionsView viewWithActionButtons:actionButtons
+                                                                         frame:actionFrame];
     [self addSubview:self.actionsView];
 }
 
@@ -235,7 +205,7 @@ static const NSInteger MAX_INDENTATION_LEVEL = 6;
     }
     
     returnedSize.height += self.headerButton.frame.size.height;
-    returnedSize.height += self.actionButtonsVisible ? self.actionsView.frame.size.height : 0.0;
+    returnedSize.height += ACTION_VIEW_HEIGHT;
     
     return returnedSize;
 }

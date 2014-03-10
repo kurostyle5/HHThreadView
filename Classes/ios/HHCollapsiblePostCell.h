@@ -26,11 +26,6 @@
 @property (nonatomic) id<HHPostProtocol> post;
 
 /**
- The block to run after collapsing this cell.
- */
-@property (nonatomic, copy) void (^collapsedCellBlock)(HHCollapsiblePostCell *cell);
-
-/**
  The number of indentations to apply to this cell.
  
  @since 1.0
@@ -64,11 +59,6 @@
  
  @since 1.0
  */
-@property (nonatomic, readonly, getter = isCollapsed) BOOL collapsed;
-
-/**
- Collapses the cell and all of its children, leaving the initially tapped cell's header visible.
- */
-- (void) collapse;
+@property (nonatomic, getter = isCollapsed) BOOL collapsed;
 
 @end

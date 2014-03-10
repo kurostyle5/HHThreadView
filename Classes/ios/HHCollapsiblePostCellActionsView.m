@@ -16,36 +16,44 @@
 
 @implementation HHCollapsiblePostCellActionsView
 
-+ (instancetype) viewWithActionButtons:(NSArray*)actionButtons size:(CGSize)size {
++ (instancetype) viewWithActionButtons:(NSArray*)actionButtons frame:(CGRect)frame {
     HHCollapsiblePostCellActionsView *view = [[HHCollapsiblePostCellActionsView alloc] init];
     view.actionButtons = actionButtons;
+    view.frame = frame;
     for (UIButton *button in view.actionButtons) {
         [view addSubview:button];
     }
-    CGRect viewFrame = view.frame;
-    viewFrame.size = size;
-    view.frame = viewFrame;
     return view;
 }
 
 - (void) layoutSubviews {
+    id superview = self.superview;
     NSUInteger numberOfButtons = self.actionButtons.count;
     if (numberOfButtons == 0) {
         return;
     }
     
     // Quick math. Center the buttons based on dividing this view by numberOfButtons + 1. It's cool.
-    CGFloat buttonCenterX = self.frame.size.width / (numberOfButtons + 1);
-    CGFloat buttonCenterY = self.frame.size.height / 2;
+    CGFloat sections = (CGFloat)(numberOfButtons + 1);
+    CGFloat buttonCenterX = round(self.frame.size.width / sections);
+    CGFloat buttonCenterY = round(self.frame.size.height / 2.0);
     
     for (int i = 0; i < numberOfButtons; ++i) {
+        
         UIButton *button = self.actionButtons[i];
+        
+        CGRect buttonFrame = button.frame;
+        CGFloat minSize = MIN(buttonFrame.size.height, buttonFrame.size.width);
+        minSize = round(MIN(minSize, self.frame.size.height * 0.67));
+        buttonFrame.size = CGSizeMake(minSize, minSize);
+        button.frame = buttonFrame;
+        
         button.center = CGPointMake(buttonCenterX * (i + 1), buttonCenterY);
         
-        CGRect frame = button.frame;
-        frame.size = CGSizeMake(buttonCenterX, buttonCenterX);
-        button.frame = frame;
+        NSLog(@"Button Center X: %@", NSStringFromCGPoint(button.center));
     }
+    
+    NSLog(@"\n\nDepth: %li\nFrame: %@\n\n", (long)[superview indentationLevel], NSStringFromCGRect(self.frame));
 }
 
 @end

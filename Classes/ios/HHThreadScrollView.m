@@ -17,14 +17,20 @@
 @property (nonatomic) BOOL laidOutSubviews;
 
 @property (nonatomic, readwrite) NSMutableArray *allCells;
+@property (nonatomic) NSMutableArray *actionButtons;
 
 @end
 
 @implementation HHThreadScrollView
 
 + (instancetype) threadViewWithPosts:(NSArray*)posts {
+    return [self threadViewWithPosts:posts actions:nil];
+}
+
++ (instancetype) threadViewWithPosts:(NSArray*)posts actions:(NSMutableArray*)actionButtons {
     HHThreadScrollView *threadView = [HHThreadScrollView new];
     threadView.posts = posts;
+    threadView.actionButtons = actionButtons;
     [threadView addAllCellsAsSubviews];
     return threadView;
 }
@@ -37,17 +43,6 @@
     self.allCells = [NSMutableArray array];
     for (int i = 0; i < self.posts.count; i++) {
         HHCollapsiblePostCell *cell = [HHCollapsiblePostCell cellWithPost:self.posts[i]];
-        cell.collapsedCellBlock = ^(HHCollapsiblePostCell* cell) {
-            NSUInteger i = [self.allCells indexOfObject:cell];
-            while(i < (self.allCells.count - 1)) {
-                HHCollapsiblePostCell *cellToCollapse = self.allCells[i];
-                if (cellToCollapse.indentationLevel <= cell.indentationLevel) {
-                    break;
-                }
-                [cellToCollapse collapse];
-                i++;
-            }
-        };
         [self.allCells addObject:cell];
         [self addSubview:cell];
     }
@@ -78,6 +73,10 @@
             cellRect.origin = CGPointMake(sidePadding, originY);
             cellRect.size = CGSizeMake(widthWithSidePadding, estimatedHeight);
             cell.frame = cellRect;
+            
+            if (self.actionButtons && !cell.actionButtons) {
+                cell.actionButtons = self.actionButtons;
+            }
         }
         self.laidOutSubviews = YES;
         [self reloadContentSize];

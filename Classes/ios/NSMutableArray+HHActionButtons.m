@@ -7,20 +7,26 @@
 //
 
 #import "NSMutableArray+HHActionButtons.h"
+#import "UIColor+HHCollapsiblePostCellColors.h"
 
 @implementation NSMutableArray (HHActionButtons)
 
-- (void) HH_addActionButtonWithIcon:(UIImage*)icon
-                             target:(id)target
-                           selector:(SEL)selector {
+- (void) HH_addActionButtonWithImage:(UIImage*)image
+                              target:(id)target
+                            selector:(SEL)selector {
+    
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     
-    [button setImage:icon
+    [button setImage:image
             forState:UIControlStateNormal];
+    
+    button.imageView.contentMode = UIViewContentModeScaleAspectFit;
     
     [button addTarget:target
                action:selector
      forControlEvents:UIControlEventTouchUpInside];
+    
+    [button sizeToFit];
     
     [self addObject:button];
 }

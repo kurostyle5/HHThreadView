@@ -13,6 +13,6 @@
  */
 @interface HHCollapsiblePostCellActionsView : UIView
 
-+ (instancetype) viewWithActionButtons:(NSArray*)actionButtons size:(CGSize)size;
++ (instancetype) viewWithActionButtons:(NSArray*)actionButtons frame:(CGRect)frame;
 
 @end
