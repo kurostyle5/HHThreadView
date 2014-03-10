@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "HHThreadView"
-  s.version          = "0.9.7"
+  s.version          = "0.9.8"
   s.summary          = "An iOS library for displaying a thread of comments, with nested replies. Inspired by Alien Blue."
   s.homepage         = "http://github.com/harlanhaskins/HHThreadView"
   s.license          = 'MIT'
