@@ -15,6 +15,7 @@
 @property (nonatomic, readonly) NSMutableArray *allCells;
 
 + (instancetype) threadViewWithPosts:(NSArray*)posts;
-+ (instancetype) threadViewWithPosts:(NSArray*)posts actions:(NSMutableArray*)actionButtons;
++ (instancetype) threadViewWithPosts:(NSArray*)posts
+                             actions:(NSMutableArray*)actionButtons;
 
 @end

@@ -9,6 +9,7 @@
 #import "HHThreadScrollView.h"
 #import "HHPostCell.h"
 #import "HHPostProtocol.h"
+#import "HHSelectorButton.h"
 
 @interface HHThreadScrollView ()
 
@@ -74,13 +75,39 @@
             cellRect.size = CGSizeMake(widthWithSidePadding, estimatedHeight);
             cell.frame = cellRect;
             
-            if (self.actionButtons && !cell.actionButtons) {
-                cell.actionButtons = self.actionButtons;
+            if (self.actionButtons && !cell.actionButtons && self.actionButtons.count > 0) {
+                cell.actionButtons = [self deepCopyOfActionButtons:self.actionButtons withTag:i];
             }
         }
         self.laidOutSubviews = YES;
         [self reloadContentSize];
     }
+}
+
+- (NSMutableArray *) deepCopyOfActionButtons:(NSMutableArray*)actionButtons withTag:(NSInteger)tag {
+    NSMutableArray *deepCopy = [NSMutableArray array];
+
+    for (HHSelectorButton *button in actionButtons) {
+
+        HHSelectorButton *newButton = [HHSelectorButton buttonWithType:button.buttonType];
+        [newButton setImage:button.imageView.image forState:UIControlStateNormal];
+        
+        newButton.imageView.contentMode = button.imageView.contentMode;
+        
+        CGRect buttonFrame = button.frame;
+        buttonFrame.origin = CGPointZero;
+        newButton.frame = buttonFrame;
+        
+        newButton.tag = tag;
+        
+        [newButton addTarget:button.allTargets.anyObject
+                      action:button.action
+            forControlEvents:UIControlEventTouchUpInside];
+        
+        [deepCopy addObject:newButton];
+    }
+
+    return deepCopy;
 }
 
 - (void) setFrame:(CGRect)frame {

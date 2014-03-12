@@ -21,6 +21,12 @@
 @property (nonatomic) NSString *bodyText;
 
 @optional
+
+/**
+ Subject of the post.
+ */
+@property (nonatomic) NSString *subject;
+
 /**
  The depth of the current post.
  */

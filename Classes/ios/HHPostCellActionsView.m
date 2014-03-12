@@ -7,6 +7,7 @@
 //
 
 #import "HHPostCellActionsView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface HHPostCellActionsView ()
 
@@ -47,7 +48,7 @@
         minSize = round(MIN(minSize, self.frame.size.height * 0.67));
         buttonFrame.size = CGSizeMake(minSize, minSize);
         button.frame = buttonFrame;
-        
+
         button.center = CGPointMake(buttonCenterX * (i + 1), buttonCenterY);
         
         NSLog(@"Button Center X: %@", NSStringFromCGPoint(button.center));

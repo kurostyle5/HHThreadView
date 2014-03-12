@@ -8,6 +8,7 @@
 
 #import "NSMutableArray+HHActionButtons.h"
 #import "UIColor+HHPostCellColors.h"
+#import "HHSelectorButton.h"
 
 @implementation NSMutableArray (HHActionButtons)
 
@@ -15,7 +16,7 @@
                               target:(id)target
                             selector:(SEL)selector {
     
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    HHSelectorButton *button = [HHSelectorButton buttonWithType:UIButtonTypeCustom];
     
     [button setImage:image
             forState:UIControlStateNormal];

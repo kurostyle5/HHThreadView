@@ -58,7 +58,7 @@ static const CGFloat ACTION_VIEW_HEIGHT = 44.0;
     self.bodyView.dataDetectorTypes = UIDataDetectorTypeAll;
     self.bodyView.opaque = YES;
     self.bodyView.backgroundColor =
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = [UIColor clearColor];
     [self addSubview:self.bodyView];
 }
 
