@@ -28,13 +28,28 @@
 @property (nonatomic) NSString *subject;
 
 /**
+ Board of the post.
+ */
+@property (nonatomic) NSString *board;
+
+/**
  The depth of the current post.
  */
 @property (nonatomic) NSInteger depth;
 
 /**
+ The number of the current post.
+ */
+@property (nonatomic) NSInteger number;
+
+/**
  An NSAttributedString representation of the body.
  */
 @property (nonatomic) NSAttributedString *attributedBody;
+
+/**
+ A BOOL that tells whether the post is starred.
+ */
+@property (nonatomic, getter = isStarred) BOOL starred;
 
 @end

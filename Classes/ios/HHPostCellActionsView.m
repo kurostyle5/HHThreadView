@@ -28,7 +28,6 @@
 }
 
 - (void) layoutSubviews {
-    id superview = self.superview;
     NSUInteger numberOfButtons = self.actionButtons.count;
     if (numberOfButtons == 0) {
         return;
@@ -50,11 +49,7 @@
         button.frame = buttonFrame;
 
         button.center = CGPointMake(buttonCenterX * (i + 1), buttonCenterY);
-        
-        NSLog(@"Button Center X: %@", NSStringFromCGPoint(button.center));
     }
-    
-    NSLog(@"\n\nDepth: %li\nFrame: %@\n\n", (long)[superview indentationLevel], NSStringFromCGRect(self.frame));
 }
 
 @end

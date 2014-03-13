@@ -31,7 +31,7 @@
 @implementation HHPostCell
 
 static const NSInteger MAX_INDENTATION_LEVEL = 6;
-static const CGFloat ACTION_VIEW_HEIGHT = 44.0;
+static const CGFloat ACTION_VIEW_HEIGHT = 34.0;
 
 + (instancetype) cellWithPost:(id<HHPostProtocol>)post {
     HHPostCell *cell = [HHPostCell new];
@@ -128,7 +128,7 @@ static const CGFloat ACTION_VIEW_HEIGHT = 44.0;
         
         CGRect actionFrame = self.actionsView.frame;
         actionFrame.origin.x = [self x];
-        actionFrame.origin.y = self.bodyView.frame.origin.y + self.bodyView.frame.size.height;
+        actionFrame.origin.y = self.bodyView.frame.origin.y + self.bodyView.frame.size.height - 4.0;
         actionFrame.size.height = ACTION_VIEW_HEIGHT;
         
         dispatch_async(dispatch_get_main_queue(), ^{
