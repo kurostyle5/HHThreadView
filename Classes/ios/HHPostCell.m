@@ -111,7 +111,7 @@ static const CGFloat ACTION_VIEW_HEIGHT = 34.0;
 }
 
 - (void) layoutSubviews {
-    dispatch_async(dispatch_queue_create("Cell Loading", 0), ^{
+    dispatch_async(dispatch_queue_create("Cell Loading", NULL), ^{
         CGFloat buttonHeight = self.headerButton.frame.size.height;
         
         CGRect frame = self.frame;
@@ -134,6 +134,14 @@ static const CGFloat ACTION_VIEW_HEIGHT = 34.0;
         dispatch_async(dispatch_get_main_queue(), ^{
             self.headerButton.frame = headerFrame;
             self.bodyView.frame = bodyViewFrame;
+            
+            if (!self.actionsView) {
+                if ([self.post respondsToSelector:@selector(actionButtons)]) {
+                    NSMutableArray *actionButtons = self.post.actionButtons;
+                    [self setActionButtons:actionButtons];
+                }
+            }
+            
             self.actionsView.frame = actionFrame;
             
             CGRect lineViewFrame = CGRectMake(0, 0, 1 / [UIScreen mainScreen].scale, frame.size.height);
@@ -169,7 +177,7 @@ static const CGFloat ACTION_VIEW_HEIGHT = 34.0;
     CGRect actionFrame = CGRectZero;
     actionFrame.size = CGSizeMake([self width], ACTION_VIEW_HEIGHT);
     self.actionsView = [HHPostCellActionsView viewWithActionButtons:actionButtons
-                                                                         frame:actionFrame];
+                                                              frame:actionFrame];
     [self addSubview:self.actionsView];
 }
 

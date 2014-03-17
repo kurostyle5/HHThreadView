@@ -52,4 +52,9 @@
  */
 @property (nonatomic, getter = isStarred) BOOL starred;
 
+/**
+ The ActionButtons of each cell.
+ */
+@property (nonatomic) NSMutableArray *actionButtons;
+
 @end

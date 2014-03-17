@@ -18,20 +18,14 @@
 @property (nonatomic) BOOL laidOutSubviews;
 
 @property (nonatomic, readwrite) NSMutableArray *allCells;
-@property (nonatomic) NSMutableArray *actionButtons;
 
 @end
 
 @implementation HHThreadScrollView
 
 + (instancetype) threadViewWithPosts:(NSArray*)posts {
-    return [self threadViewWithPosts:posts actions:nil];
-}
-
-+ (instancetype) threadViewWithPosts:(NSArray*)posts actions:(NSMutableArray*)actionButtons {
     HHThreadScrollView *threadView = [HHThreadScrollView new];
     threadView.posts = posts;
-    threadView.actionButtons = actionButtons;
     [threadView addAllCellsAsSubviews];
     return threadView;
 }
@@ -74,40 +68,10 @@
             cellRect.origin = CGPointMake(sidePadding, originY);
             cellRect.size = CGSizeMake(widthWithSidePadding, estimatedHeight);
             cell.frame = cellRect;
-            
-            if (self.actionButtons && !cell.actionButtons && self.actionButtons.count > 0) {
-                cell.actionButtons = [self deepCopyOfActionButtons:self.actionButtons withTag:i];
-            }
         }
         self.laidOutSubviews = YES;
         [self reloadContentSize];
     }
-}
-
-- (NSMutableArray *) deepCopyOfActionButtons:(NSMutableArray*)actionButtons withTag:(NSInteger)tag {
-    NSMutableArray *deepCopy = [NSMutableArray array];
-
-    for (HHSelectorButton *button in actionButtons) {
-
-        HHSelectorButton *newButton = [HHSelectorButton buttonWithType:button.buttonType];
-        [newButton setImage:button.imageView.image forState:UIControlStateNormal];
-        
-        newButton.imageView.contentMode = button.imageView.contentMode;
-        
-        CGRect buttonFrame = button.frame;
-        buttonFrame.origin = CGPointZero;
-        newButton.frame = buttonFrame;
-        
-        newButton.tag = tag;
-        
-        [newButton addTarget:button.allTargets.anyObject
-                      action:button.action
-            forControlEvents:UIControlEventTouchUpInside];
-        
-        [deepCopy addObject:newButton];
-    }
-
-    return deepCopy;
 }
 
 - (void) setFrame:(CGRect)frame {

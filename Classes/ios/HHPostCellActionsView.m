@@ -13,6 +13,9 @@
 
 @property (nonatomic) NSArray *actionButtons;
 
+// For some reason the frame gets overwritten to CGRectZero. We need to save a copy.
+@property (nonatomic) CGRect savedFrame;
+
 @end
 
 @implementation HHPostCellActionsView
@@ -20,7 +23,7 @@
 + (instancetype) viewWithActionButtons:(NSArray*)actionButtons frame:(CGRect)frame {
     HHPostCellActionsView *view = [[HHPostCellActionsView alloc] init];
     view.actionButtons = actionButtons;
-    view.frame = frame;
+    view.savedFrame = frame;
     for (UIButton *button in view.actionButtons) {
         [view addSubview:button];
     }
@@ -28,6 +31,8 @@
 }
 
 - (void) layoutSubviews {
+    self.frame = self.savedFrame;
+    
     NSUInteger numberOfButtons = self.actionButtons.count;
     if (numberOfButtons == 0) {
         return;
